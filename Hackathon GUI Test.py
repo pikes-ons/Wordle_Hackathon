@@ -57,8 +57,7 @@ def word_test():
     current_attempt += 1
      
     if current_attempt == 7:
-        #sbmt_btn.config(state="disabled")
-        sbmt_btn['state'] = DISABLED
+        sbmt_btn.config(state="disabled")
         tk.Label(window, text = " press quit and try again", bg = "white").place(x = 30, y = 140)
         quitButton = tk.Button(window, text='Quit', command=window.destroy)
         quitButton.grid()
