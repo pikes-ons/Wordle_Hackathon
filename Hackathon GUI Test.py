@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 """
+Spyder Editor
+
+This is a temporary script file.
+"""
+"""
 Created on Mon Jun 19 14:20:29 2023
 
 @author: pikes
@@ -7,9 +12,10 @@ Created on Mon Jun 19 14:20:29 2023
 #Import packages
 import pandas as pd
 import tkinter as tk
+from tkinter import messagebox
 
 #Import dataset
-words = pd.read_csv("C:/Users/pikes/Downloads/valid_solutions.csv", names = ["WORD"])
+words = pd.read_csv("C:/Users/kelloe/Downloads/valid_solutions.csv", names = ["WORD"])
 
 #Choose word and break it down into list for comparison
 #word_selection = words.sample(n=1)
@@ -38,27 +44,41 @@ def check_letter(sl, wl, r, c):
     else:
         tk.Label(window, text = sl, bg = "#FFD580").place(x = c, y = r)
         return
-    
+
+current_attempt = 0
+ 
 #Word test function
 def word_test():
+    
+    global current_attempt
+     
     submitted_word = text.get()
-    sl1 = submitted_word[0]
-    sl2 = submitted_word[1]
-    sl3 = submitted_word[2]
-    sl4 = submitted_word[3]
-    sl5 = submitted_word[4]
-    check_letter(sl1, wl1, 30, 90)
-    check_letter(sl2, wl2, 30, 100)
-    check_letter(sl3, wl3, 30, 110)
-    check_letter(sl4, wl4, 30, 120)
-    check_letter(sl5, wl5, 30, 130)
-    return
+     
+    current_attempt += 1
+     
+    if current_attempt == 7:
+        #sbmt_btn.config(state="disabled")
+        sbmt_btn['state'] = DISABLED
+        tk.Label(window, text = " press quit and try again", bg = "white").place(x = 30, y = 140)
+        quitButton = tk.Button(window, text='Quit', command=window.destroy)
+        quitButton.grid()
+        #window.quit()
+    else:
+        sl1 = submitted_word[0]
+        sl2 = submitted_word[1]
+        sl3 = submitted_word[2]
+        sl4 = submitted_word[3]
+        sl5 = submitted_word[4]
+        check_letter(sl1, wl1, 30, 90)
+        check_letter(sl2, wl2, 30, 100)
+        check_letter(sl3, wl3, 30, 110)
+        check_letter(sl4, wl4, 30, 120)
+        check_letter(sl5, wl5, 30, 130)
 
-#Submit button 
-sbmt_btn = tk.Button(window, text = "Submit", command = word_test).grid(row = 0, column = 1)
+
+        
+sbmt_btn = tk.Button(window, text = "Submit", command = word_test)
+sbmt_btn.grid(row = 0, column = 1)
 
 window.mainloop()
 
-
-    
-    
