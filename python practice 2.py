@@ -92,29 +92,36 @@ def guess_label():
     tk.Label(window, bg = cb[4,2], text=lb[4,2], width = w, height = h).grid(row = r, column = 3, padx = 5, pady = 10) #text for third letter
     tk.Label(window, bg = cb[4,3], text=lb[4,3], width = w, height = h).grid(row = r, column = 4, padx = 5, pady = 10) #text for fourth letter
     tk.Label(window, bg = cb[4,4], text=lb[4,4], width = w, height = h).grid(row = r, column = 5, padx = 5, pady = 10) #text for fifth letter
-    r = r - 1
+    r = r - 1 #updates row count
     return 
 
 def display():
     global r
-    get_word()
-    letters_board()
-    colours_board()
-    guess_label()  
+    if r == 0 :
+        sbmt_btn.config(state="disabled")
+        tk.Label(window, text = "Press quit and try again").grid(row = 7, column = 0, columnspan = 6)
+        quitButton = tk.Button(window, text='Quit', command=window.destroy) #create new function to destroy current window and reopen it
+        quitButton.grid(row = 8, column = 0, columnspan = 6)
+    else:
+        get_word()
+        letters_board()
+        colours_board()
+        guess_label()  
     return    
     
 #-------------------------------------------Code to run game-------------------------------------------------  
 
 #Create GUI window and size
 window = tk.Tk()
-window.geometry("350x500")
+window.geometry("300x700")
 
 #User to submit word
 text = tk.Entry(window)
 text.focus_set()
 text.grid(row = 0, column = 0, columnspan = 5, padx = 15, pady = 30)
 
-sbmt_btn = tk.Button(window, text = "Submit", command = lambda: display()).grid(row = 0, column = 5)  
+sbmt_btn = tk.Button(window, text = "Submit", command = lambda: display())
+sbmt_btn.grid(row = 0, column = 5)  
 
 
     
