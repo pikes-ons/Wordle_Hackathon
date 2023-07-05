@@ -100,15 +100,14 @@ def display():
     #global label
     
     get_word() # new
-    lowercase_words = np.char.lower(words['WORD'].tolist()[1:]) # new (check valid input)
+    
     label.grid_forget()
      
     if r == 0 :
         sbmt_btn.config(state="disabled")
-        tk.Label(window, text = "Press quit and try again").grid(row = 7, column = 0, columnspan = 6)
-        quitButton = tk.Button(window, text='Quit', command=window.destroy) # create new function to destroy current window and reopen it
+        label_quit.grid(row = 7, column = 0, columnspan = 6)
         quitButton.grid(row = 8, column = 0, columnspan = 6)
-    elif sw not in lowercase_words: # new (check valid input)
+    elif sw.lower() not in lowercase_words: # new (check valid input)
         label.grid(row = 9, column = 0, columnspan = 6) # new (show user put invalid word)
     else:
         letters_board()
@@ -117,7 +116,7 @@ def display():
     return    
 
 def validate_input(text):
-    if not text.isalpha() and text != '': # allow empty strings so user can delete the first letter
+    if not text.isalpha() and text != '': # new only allow letter and to delete the first character
         return False
     return True    
 #-------------------------------------------Code to run game-------------------------------------------------  
@@ -126,11 +125,16 @@ def validate_input(text):
 window = tk.Tk()
 window.geometry("300x700")
 
-validation = window.register(validate_input) # new (allow only letters)
-
+# create widgets to check user put valid word
 label = tk.Label(window, text = "invalid word!") # new (show user put invalid word) used in display function
+lowercase_words = np.char.lower(words['WORD'].tolist()[1:]) # new (check valid input)
 
+# create widgets to quit after 6 valid attempts
+quitButton = tk.Button(window, text='Quit', command=window.destroy) # create new function to destroy current window and reopen it
+label_quit = tk.Label(window, text = "Press quit and try again")
 #User to submit word
+
+validation = window.register(validate_input) # new (allow only letters)
 text = tk.Entry(window, validate="key", validatecommand=(validation, "%P")) # new (allow only letters)
 text.focus_set()
 text.grid(row = 0, column = 0, columnspan = 5, padx = 15, pady = 30)
