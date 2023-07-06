@@ -35,6 +35,9 @@ def get_word():
     global sw
     submitted_word = text.get()
     sw = submitted_word
+    if sw == word:
+        sbmt_btn.config(state="disabled")
+        tk.Label(window, text = "Congratulations! You solved the word.").grid(row = 7, column = 0, columnspan = 6)
     return
 
 #Update colours board
