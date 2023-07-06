@@ -9,12 +9,22 @@ Created on Mon Jun 26 12:59:08 2023
 import pandas as pd
 import tkinter as tk
 import numpy as np
-
+import random
 #----------------------------------------Assign Variables----------------------------------------
-words = pd.read_csv("C:/Users/kelloe/Downloads/valid_solutions.csv", names = ["WORD"])
+word_choice = pd.read_csv("C:/Users/nicolr/Downloads/valid_solutions.csv", names = ["WORD"])
 lb = np.zeros((5,5)) #letter board 
 cb = np.zeros((5,5)) #colour board
-word = "hello"
+
+random_word = ""
+
+def select_random_word(dataframe):
+   words = dataframe["WORD"].tolist()
+   global random_word
+   random_word = random.choice(words)
+   return random_word
+
+word = select_random_word(word_choice)
+
 #row placements for guess display labels in window
 r = 6
 sw = "" #Storage for guessed word
@@ -119,7 +129,7 @@ def display():
     return    
 
 def validate_input(text):
-    if not text.isalpha() and text != '' and len(text) != 5: # only allow letter and to delete the first character and (new) only allow words that are length 5
+    if not text.isalpha() and text != '' and len(text) != 5: # new only allow letter and to delete the first character
         return False
     return True    
 #-------------------------------------------Code to run game-------------------------------------------------  
@@ -130,7 +140,7 @@ window.geometry("300x700")
 
 # create widgets to check user put valid word
 label = tk.Label(window, text = "invalid word!") # new (show user put invalid word) used in display function
-lowercase_words = np.char.lower(words['WORD'].tolist()[1:]) # new (check valid input)
+lowercase_words = np.char.lower(word_choice['WORD'].tolist()[1:]) # new (check valid input)
 
 # create widgets to quit after 6 valid attempts
 quitButton = tk.Button(window, text='Quit', command=window.destroy) # create new function to destroy current window and reopen it
@@ -147,4 +157,4 @@ sbmt_btn.grid(row = 0, column = 5)
 
 
     
-window.mainloop()   
+window.mainloop()
