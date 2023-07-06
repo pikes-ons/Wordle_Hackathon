@@ -119,7 +119,7 @@ def display():
     return    
 
 def validate_input(text):
-    if not text.isalpha() and text != '': # new only allow letter and to delete the first character
+    if not text.isalpha() and text != '' and len(text) != 5: # only allow letter and to delete the first character and (new) only allow words that are length 5
         return False
     return True    
 #-------------------------------------------Code to run game-------------------------------------------------  
