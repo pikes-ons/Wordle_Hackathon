@@ -11,7 +11,7 @@ import tkinter as tk
 import numpy as np
 import random
 #----------------------------------------Assign Variables----------------------------------------
-word_choice = pd.read_csv("C:/Users/nicolr/Downloads/valid_solutions.csv", names = ["WORD"])
+word_choice = pd.read_csv("C:/Users/kelloe/Downloads/valid_solutions.csv", names = ["WORD"])
 lb = np.zeros((5,5)) #letter board 
 cb = np.zeros((5,5)) #colour board
 
@@ -114,14 +114,17 @@ def display():
     
     get_word() # new
     
-    label.grid_forget()
+    label_length.grid_forget() # new (remove label on new attempt)
+    label_valid_word.grid_forget() # new (remove label on new attempt)
      
     if r == 0 :
         sbmt_btn.config(state="disabled")
         label_quit.grid(row = 7, column = 0, columnspan = 6)
         quitButton.grid(row = 8, column = 0, columnspan = 6)
+    elif len(sw) != 5:
+        label_length.grid(row = 9, column = 0, columnspan = 6) # new (show incorrect length)
     elif sw.lower() not in lowercase_words: # new (check valid input)
-        label.grid(row = 9, column = 0, columnspan = 6) # new (show user put invalid word)
+        label_valid_word.grid(row = 9, column = 0, columnspan = 6) # new (show user put invalid word)
     else:
         letters_board()
         colours_board()
@@ -129,9 +132,9 @@ def display():
     return    
 
 def validate_input(text):
-    if not text.isalpha() and text != '' and len(text) != 5: # new only allow letter and to delete the first character
+    if not text.isalpha() and text != '': # new only allow letter and to delete the first character
         return False
-    return True    
+    return True   
 #-------------------------------------------Code to run game-------------------------------------------------  
 
 #Create GUI window and size
@@ -139,8 +142,10 @@ window = tk.Tk()
 window.geometry("300x700")
 
 # create widgets to check user put valid word
-label = tk.Label(window, text = "invalid word!") # new (show user put invalid word) used in display function
+label_valid_word = tk.Label(window, text = "invalid word!") # new (show user put invalid word) used in display function
 lowercase_words = np.char.lower(word_choice['WORD'].tolist()[1:]) # new (check valid input)
+
+label_length = tk.Label(window, text = "Make sure your word is 5 letters")
 
 # create widgets to quit after 6 valid attempts
 quitButton = tk.Button(window, text='Quit', command=window.destroy) # create new function to destroy current window and reopen it
