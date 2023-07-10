@@ -4,16 +4,16 @@ Created on Mon Jun 26 12:59:08 2023
 
 @author: pikes
 """
-
 #----------------------------------------Import packages----------------------------------------
 import pandas as pd
 import tkinter as tk
 import numpy as np
 import random
+#----------------------------------------Assign Variables----------------------------------------
 import requests
 import io
 import json
-#----------------------------------------Assign Variables----------------------------------------
+
 csv_url = "https://github.com/pikes-ons/Wordle_Hackathon/blob/main/valid_solutions.csv"
 # download into memory into memory and not file system
 response = requests.get(csv_url)
@@ -26,19 +26,19 @@ if response.status_code == 200:
     word_choice = data_dict['payload']['blob']['rawBlob'].split('\r\n')[1:-1]
 else:
     print('unable to get a response.')
-word_choice = pd.read_csv("C:/Users/kelloe/Downloads/valid_solutions.csv", names = ["WORD"])
+    
 lb = np.zeros((5,5)) #letter board 
 cb = np.zeros((5,5)) #colour board
 
 random_word = ""
 
-def select_random_word(dataframe):
-   words = dataframe["WORD"].tolist()
-   global random_word
+def select_random_word(words):
    random_word = random.choice(words)
    return random_word
 
 word = select_random_word(word_choice)
+
+print(word)
 
 #row placements for guess display labels in window
 r = 6
@@ -129,8 +129,8 @@ def display():
     
     get_word() # new
     
-    label_length.grid_forget() # new (remove label on new attempt)
-    label_valid_word.grid_forget() # new (remove label on new attempt)
+    label_length.grid_forget() # new (remove label `label_length` on new attempt)
+    label_valid_word.grid_forget() # new (remove label `label_valid_word` on new attempt)
      
     if r == 0 :
         sbmt_btn.config(state="disabled")
@@ -158,7 +158,7 @@ window.geometry("300x700")
 
 # create widgets to check user put valid word
 label_valid_word = tk.Label(window, text = "invalid word!") # new (show user put invalid word) used in display function
-lowercase_words = np.char.lower(word_choice['WORD'].tolist()[1:]) # new (check valid input)
+lowercase_words = np.char.lower(word_choice) # new (check valid input)
 
 label_length = tk.Label(window, text = "Make sure your word is 5 letters")
 
