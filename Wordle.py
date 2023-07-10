@@ -10,7 +10,22 @@ import pandas as pd
 import tkinter as tk
 import numpy as np
 import random
+import requests
+import io
+import json
 #----------------------------------------Assign Variables----------------------------------------
+csv_url = "https://github.com/pikes-ons/Wordle_Hackathon/blob/main/valid_solutions.csv"
+# download into memory into memory and not file system
+response = requests.get(csv_url)
+
+if response.status_code == 200:    
+    csv_data = io.StringIO(response.content.decode('utf-8'))
+    json_contents = csv_data.read()
+    data_dict = json.loads(json_contents)
+    
+    word_choice = data_dict['payload']['blob']['rawBlob'].split('\r\n')[1:-1]
+else:
+    print('unable to get a response.')
 word_choice = pd.read_csv("C:/Users/kelloe/Downloads/valid_solutions.csv", names = ["WORD"])
 lb = np.zeros((5,5)) #letter board 
 cb = np.zeros((5,5)) #colour board
