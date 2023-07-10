@@ -9,10 +9,11 @@ Created on Mon Jun 26 12:59:08 2023
 import tkinter as tk
 import numpy as np
 import random
-#----------------------------------------Assign Variables----------------------------------------
 import requests
 import io
 import json
+
+#----------------------------------------Assign Variables----------------------------------------
 
 csv_url = "https://github.com/pikes-ons/Wordle_Hackathon/blob/main/valid_solutions.csv"
 # download into memory into memory and not file system
