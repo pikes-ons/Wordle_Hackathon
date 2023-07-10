@@ -4,8 +4,8 @@ Created on Mon Jun 26 12:59:08 2023
 
 @author: pikes
 """
+
 #----------------------------------------Import packages----------------------------------------
-import pandas as pd
 import tkinter as tk
 import numpy as np
 import random
@@ -38,11 +38,10 @@ def select_random_word(words):
 
 word = select_random_word(word_choice)
 
-print(word)
-
 #row placements for guess display labels in window
 r = 6
 sw = "" #Storage for guessed word
+swi = "" #storage for correct word minus guessed letters to solve double letter problem
 
 #Change format of correct word to upper case
 word_selection2 = word.upper()
@@ -69,6 +68,8 @@ def get_word():
 def colours_board():
     global cb #to update the colour board variable outside of the function
     global sw
+    global swi 
+    swi = word_selection2
     colour_board_del = np.delete(cb, 0, 0) #deletes first row in array
     sl1 = sw[0].upper()
     sl2 = sw[1].upper()
@@ -85,14 +86,18 @@ def colours_board():
     return 
 
 #Compare single letter of word guess with corresponding letter of correct word to populate colour board with correct colours
+#Added adjustments for double letter calculation
 def check_letter(sl, wl):
-    if sl not in word_selection2:
+    global swi
+    if sl not in swi:
         return "#FFFFFF"
     elif sl == wl:
+        swi = swi.replace(sl,"_",1)
         return "#77dd77"
     else:
-        return "#ffb347"
-    
+        if sl in swi:
+            swi = swi.replace(sl,"_",1)
+            return "#ffb347"
     
 #Update letters board
 def letters_board():
