@@ -16,7 +16,7 @@ import json
 #----------------------------------------Assign Variables----------------------------------------
 
 csv_url = "https://github.com/pikes-ons/Wordle_Hackathon/blob/main/valid_solutions.csv"
-# download into memory into memory and not file system
+# download into memory and not file system
 response = requests.get(csv_url)
 
 if response.status_code == 200:    
@@ -26,7 +26,7 @@ if response.status_code == 200:
     
     word_choice = data_dict['payload']['blob']['rawBlob'].split('\r\n')[1:-1]
 else:
-    print('unable to get a response.')
+    print('Unable to get a response.')
     
 lb = np.zeros((5,5)) #letter board 
 cb = np.zeros((5,5)) #colour board
@@ -163,7 +163,7 @@ window = tk.Tk()
 window.geometry("300x700")
 
 # create widgets to check user put valid word
-label_valid_word = tk.Label(window, text = "invalid word!") # new (show user put invalid word) used in display function
+label_valid_word = tk.Label(window, text = "Invalid word.") # new (show user put invalid word) used in display function
 lowercase_words = np.char.lower(word_choice) # new (check valid input)
 
 label_length = tk.Label(window, text = "Make sure your word is 5 letters")
