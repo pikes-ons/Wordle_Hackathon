@@ -6,6 +6,7 @@ Created on Mon Jun 26 12:59:08 2023
 """
 
 #----------------------------------------Import packages----------------------------------------
+
 import tkinter as tk
 import numpy as np
 import random
@@ -28,104 +29,105 @@ if response.status_code == 200:
 else:
     print('Unable to get a response.')
     
-lb = np.zeros((5,5)) #letter board 
-cb = np.zeros((5,5)) #colour board
+letter_board = np.zeros((5,5)) #letter board 
+colour_board = np.zeros((5,5)) #colour board
 
-random_word = ""
+answer = ""
 
 def select_random_word(words):
-   random_word = random.choice(words)
-   return random_word
+   answer = random.choice(words)
+   return answer
 
-word = select_random_word(word_choice)
+correct_word = select_random_word(word_choice)
 
 #row placements for guess display labels in window
 r = 6
-sw = "" #Storage for guessed word
-swi = "" #storage for correct word minus guessed letters to solve double letter problem
+guessed_word = "" #Storage for guessed word
+correct_word_progress = "" #storage for correct word minus guessed letters to solve double letter problem
 
 #Change format of correct word to upper case
-word_selection2 = word.upper()
+correct_word_upper = correct_word.upper()
 
 #Split correct word into individual letters
-wl1 = word_selection2[0].upper()
-wl2 = word_selection2[1].upper()
-wl3 = word_selection2[2].upper()
-wl4 = word_selection2[3].upper()
-wl5 = word_selection2[4].upper()
+correct_word_letter_1 = correct_word_upper[0].upper()
+correct_word_letter_2 = correct_word_upper[1].upper()
+correct_word_letter_3 = correct_word_upper[2].upper()
+correct_word_letter_4 = correct_word_upper[3].upper()
+correct_word_letter_5 = correct_word_upper[4].upper()
 
 #----------------------------------------Functions----------------------------------------
 
 def get_word():
-    global sw
+    global guessed_word
     submitted_word = text.get()
-    sw = submitted_word
-    if sw == word:
+    guessed_word = submitted_word
+    if guessed_word == correct_word:
         sbmt_btn.config(state="disabled")
         tk.Label(window, text = "Congratulations! You solved the word.").grid(row = 7, column = 0, columnspan = 6)
     return
 
 #Update colours board
 def colours_board():
-    global cb #to update the colour board variable outside of the function
-    global sw
-    global swi 
-    swi = word_selection2
-    colour_board_del = np.delete(cb, 0, 0) #deletes first row in array
-    sl1 = sw[0].upper()
-    sl2 = sw[1].upper()
-    sl3 = sw[2].upper()
-    sl4 = sw[3].upper()
-    sl5 = sw[4].upper()
-    col1 = check_letter(sl1, wl1)
-    col2 = check_letter(sl2, wl2)
-    col3 = check_letter(sl3, wl3)
-    col4 = check_letter(sl4, wl4)
-    col5 = check_letter(sl5, wl5)
+    global colour_board #to update the colour board variable outside of the function
+    global guessed_word
+    global correct_word_progress 
+    correct_word_progress = correct_word_upper
+    colour_board_del = np.delete(colour_board, 0, 0) #deletes first row in array
+    guessed_word_letter_1 = guessed_word[0].upper()
+    guessed_word_letter_2 = guessed_word[1].upper()
+    guessed_word_letter_3 = guessed_word[2].upper()
+    guessed_word_letter_4 = guessed_word[3].upper()
+    guessed_word_letter_5 = guessed_word[4].upper()
+    col1 = check_letter(guessed_word_letter_1, correct_word_letter_1)
+    col2 = check_letter(guessed_word_letter_2, correct_word_letter_2)
+    col3 = check_letter(guessed_word_letter_3, correct_word_letter_3)
+    col4 = check_letter(guessed_word_letter_4, correct_word_letter_4)
+    col5 = check_letter(guessed_word_letter_5, correct_word_letter_5)
     colour_row = [col1, col2, col3, col4, col5]
-    cb = np.vstack([colour_board_del, colour_row])
+    colour_board = np.vstack([colour_board_del, colour_row])
     return 
 
-#Compare single letter of word guess with corresponding letter of correct word to populate colour board with correct colours
+#Compare single letter of word guess with corresponding letter of correct word to populate colour board 
+#with correct colours
 #Added adjustments for double letter calculation
-def check_letter(sl, wl):
-    global swi
-    if sl not in swi:
+def check_letter(guess_letter, correct_letter):
+    global correct_word_progress
+    if guess_letter not in correct_word_progress:
         return "#FFFFFF"
-    elif sl == wl:
-        swi = swi.replace(sl,"_",1)
+    elif guess_letter == correct_letter:
+        correct_word_progress = correct_word_progress.replace(guess_letter,"_",1)
         return "#77dd77"
     else:
-        if sl in swi:
-            swi = swi.replace(sl,"_",1)
+        if guess_letter in correct_word_progress:
+            correct_word_progress = correct_word_progress.replace(guess_letter,"_",1)
             return "#ffb347"
     
 #Update letters board
 def letters_board():
-    global lb
-    global sw
-    letter_board_del = np.delete(lb, 0, 0) #deletes first row in array
-    sl1 = sw[0].upper()
-    sl2 = sw[1].upper()
-    sl3 = sw[2].upper()
-    sl4 = sw[3].upper()
-    sl5 = sw[4].upper()
-    new_guess = [sl1, sl2, sl3, sl4, sl5] #creates new array row 
-    lb = np.vstack([letter_board_del, new_guess]) #makes relevant changes to variables
+    global letter_board
+    global guessed_word
+    letter_board_del = np.delete(letter_board, 0, 0) #deletes first row in array
+    guessed_word_letter_1 = guessed_word[0].upper()
+    guessed_word_letter_2 = guessed_word[1].upper()
+    guessed_word_letter_3 = guessed_word[2].upper()
+    guessed_word_letter_4 = guessed_word[3].upper()
+    guessed_word_letter_5 = guessed_word[4].upper()
+    new_guess = [guessed_word_letter_1, guessed_word_letter_2, guessed_word_letter_3, guessed_word_letter_4, guessed_word_letter_5] #creates new array row 
+    letter_board = np.vstack([letter_board_del, new_guess]) #makes relevant changes to variables
     return
     
     
 def guess_label():
     w = 5
     h = 3
-    global lb
-    global cb
+    global letter_board
+    global colour_board
     global r
-    tk.Label(window, bg = cb[4,0], text=lb[4,0], width = w, height = h).grid(row = r, column = 1, padx = 5, pady = 10) #text for first letter
-    tk.Label(window, bg = cb[4,1], text=lb[4,1], width = w, height = h).grid(row = r, column = 2, padx = 5, pady = 10) #text for second letter
-    tk.Label(window, bg = cb[4,2], text=lb[4,2], width = w, height = h).grid(row = r, column = 3, padx = 5, pady = 10) #text for third letter
-    tk.Label(window, bg = cb[4,3], text=lb[4,3], width = w, height = h).grid(row = r, column = 4, padx = 5, pady = 10) #text for fourth letter
-    tk.Label(window, bg = cb[4,4], text=lb[4,4], width = w, height = h).grid(row = r, column = 5, padx = 5, pady = 10) #text for fifth letter
+    tk.Label(window, bg = colour_board[4,0], text=letter_board[4,0], width = w, height = h).grid(row = r, column = 1, padx = 5, pady = 10) #text for first letter
+    tk.Label(window, bg = colour_board[4,1], text=letter_board[4,1], width = w, height = h).grid(row = r, column = 2, padx = 5, pady = 10) #text for second letter
+    tk.Label(window, bg = colour_board[4,2], text=letter_board[4,2], width = w, height = h).grid(row = r, column = 3, padx = 5, pady = 10) #text for third letter
+    tk.Label(window, bg = colour_board[4,3], text=letter_board[4,3], width = w, height = h).grid(row = r, column = 4, padx = 5, pady = 10) #text for fourth letter
+    tk.Label(window, bg = colour_board[4,4], text=letter_board[4,4], width = w, height = h).grid(row = r, column = 5, padx = 5, pady = 10) #text for fifth letter
     r = r - 1 #updates row count
     return 
 
@@ -142,9 +144,9 @@ def display():
         sbmt_btn.config(state="disabled")
         label_quit.grid(row = 7, column = 0, columnspan = 6)
         quitButton.grid(row = 8, column = 0, columnspan = 6)
-    elif len(sw) != 5:
+    elif len(guessed_word) != 5:
         label_length.grid(row = 9, column = 0, columnspan = 6) # new (show incorrect length)
-    elif sw.lower() not in lowercase_words: # new (check valid input)
+    elif guessed_word.lower() not in lowercase_words: # new (check valid input)
         label_valid_word.grid(row = 9, column = 0, columnspan = 6) # new (show user put invalid word)
     else:
         letters_board()
