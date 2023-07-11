@@ -241,7 +241,7 @@ the window.
 
 The function then tests if this word is the correct length or a valid word. If 
 it is then it will run the lettes_board(), colours_board(), and guess_label() 
-functions.
+functions and clear the guess ready for the next attempt.
 """
 
 def display():
@@ -262,6 +262,7 @@ def display():
         letters_board()
         colours_board()
         guess_label()  
+        text.delete(0, tk.END) 
     return    
 
 """
