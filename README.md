@@ -55,16 +55,20 @@ Thanks to the following people who have contributed to this project:
 This project does not currently accept contributions.
 
 ## FAQs
-1. What do the colours mean?
+1. **What do the colours mean?**
+
    Green: The letter is in the word and in the correct place.
    Orange: The letter is in the word but in the incorrect place.
    White: The letter is not in the word at all.
 
-2. How many guesses do we have?
+2. **How many guesses do we have?**
+
    You have 6 guesses. If you don't get the word within these guesses, a button will pop up that you can click to close the game.
    
-3. How do we run the code?
+3. **How do we run the code?**
+
    First, download the Wordle.py file and open in your Python programme of choice (e.g. Spyder). Then run by clicking the green play button on the tool bar. The code will create a pop up window where you can play the game.
    
-4. How do we try again?
+4. **How do we play again?**
+   
    If you run out of guesses, you can close the game and restart the code. This will generate a different random word for you to guess so, even if you get the correct answer, you can play as many times as you like. 
