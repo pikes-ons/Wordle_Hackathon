@@ -28,12 +28,14 @@ csv_url = "https://github.com/pikes-ons/Wordle_Hackathon/blob/main/valid_sol"\
 
 response = requests.get(csv_url)
 
+char = "\r"
+
 if response.status_code == 200:    
     csv_data = io.StringIO(response.content.decode('utf-8'))
     json_contents = csv_data.read()
     data_dict = json.loads(json_contents)
-    
-    word_choice = data_dict['payload']['blob']['rawBlob'].split('\r\n')[1:-1]
+    word_choice = data_dict['payload']['blob']['rawBlob']
+    word_choice = [ele.replace(char, "") for ele in word_choice]
 else:
     print('Unable to get a response.')
 
