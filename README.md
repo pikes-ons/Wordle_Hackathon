@@ -18,7 +18,7 @@ Python code to run a Wordle-style game.
 Wordle Hackathon is a project developed by the Bits and Bytes team as part of the Coffee and Coding: Coding Best Practices Hackathon that allows users to play a Wordle-style game. When the code is run, a tkinter window will pop up on the users' screen. Users can type in a valid, English, 5 letter word and press submit. The GUI will then output the word submitted by the user in a colour coordinated fashion. For more information on how to run the game, please see section 6: Usage.
 
 ## Technologies
-This project is programmed using Python Version 3.10.12. 
+This project is programmed using Python Version 3.8.3. 
 
 ## Dependencies
 All packages used in the code are inbuilt into Python. These packages are:
