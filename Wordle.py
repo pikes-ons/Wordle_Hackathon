@@ -28,6 +28,7 @@ csv_url = "https://github.com/pikes-ons/Wordle_Hackathon/blob/main/valid_sol"\
 
 response = requests.get(csv_url)
 
+#Identify character to remove from list word_choice in the below if statement
 char = "\r"
 
 if response.status_code == 200:    
