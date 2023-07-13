@@ -38,9 +38,9 @@ All packages used in the code are inbuilt into Python. These packages are:
 1. Launch the game by running Wordle.py
 2. The game will display a user interface where you can guess English five letter words.
 3. After making a guess, the game will provide feedback in the form of coloured indicators:
-   Green: The letter is in the word and in the correct place.
-   Orange: The letter is in the word but in the incorrect place.
-   White: The letter is not in the word at all.
+   - Green: The letter is in the word and in the correct place.
+   - Orange: The letter is in the word but in the incorrect place.
+   - White: The letter is not in the word at all.
 4. Keep guessing until you guess the correct word or you run out of attempts. You have 6 attempts to guess the correct word.
    
 ## Contributors
