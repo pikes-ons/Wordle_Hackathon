@@ -294,8 +294,8 @@ label_length = tk.Label(window, text = "Make sure your word is 5 letters")
 quitButton = tk.Button(window, text='Quit', command=window.destroy) 
 
 #Creates label for if the guess count maximum is reached.
-label_quit = tk.Label(window, text = "The word was:" + correct_word_upper + 
-                      "Press quit and try again")
+label_quit = tk.Label(window, text = "The word was: " + correct_word_upper + 
+                      " Press quit and try again")
 
 """
 Creates a widget for users to enter their submitted words. Checks the 
